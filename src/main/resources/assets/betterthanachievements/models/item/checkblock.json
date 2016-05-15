@@ -1,0 +1,7 @@
+{
+    "parent": "betterthanachievements:block/checkblock",
+    "textures": {
+        "all": "betterthanachievements:blocks/checkblock"
+    }
+}
+

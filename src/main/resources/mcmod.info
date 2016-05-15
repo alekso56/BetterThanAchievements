@@ -1,0 +1,21 @@
+[
+{
+    "modid": "betterthanachievements",
+    "name": "BetterThanAchievements",
+    "description": "Provides a nice achievement tracker for btm. Comes with energy drinks.",
+    "mcversion": "$mcversion",
+    "version": "$version",
+    "url": "https://github.com/alekso56/BetterThanAchievements",
+    "updateUrl": "",
+    "authors": [
+        "alekso56"
+    ],
+    "credits": "By alekso56",
+    "logoFile": "/bta.png",
+    "screenshots": [
+    ],
+    "parent":"",
+    "dependencies": [
+    ]
+}
+]
