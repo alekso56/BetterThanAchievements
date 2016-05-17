@@ -1,10 +1,16 @@
 package BetterThanAchievements;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -25,13 +31,22 @@ public class BetterThanAchievements {
     @SidedProxy(serverSide = "BetterThanAchievements.CommonProxy", clientSide = "BetterThanAchievements.ClientProxy")
     public static CommonProxy proxy;
     
+    public static AchievementCheckBlock blocky;
+    public static AchievementPage mainpage;
+    static String confpath;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         // load config
-        Config.loadConfig(event.getSuggestedConfigurationFile());
+        Config.loadConfig(event.getSuggestedConfigurationFile().getParentFile());
         //register stuff
-        new AchievementCheckBlock(Material.cloth);
-        
+        blocky = new AchievementCheckBlock(Material.cloth);
+        proxy.setupTextures();
+        mainpage.
     }
+    
+    public static Long unixtime(){
+		return System.currentTimeMillis() / 1000L;
+	}
     
 }
