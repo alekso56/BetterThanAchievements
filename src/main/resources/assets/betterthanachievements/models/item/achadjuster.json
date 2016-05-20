@@ -1,7 +1,7 @@
 {
-    "parent": "betterthanachievements:block/checkblock",
+    "parent": "item/generated",
     "textures": {
-        "all": "betterthanachievements:blocks/checkblock"
+        "layer0": "betterthanachievements:items/achadjuster"
     }
 }
 

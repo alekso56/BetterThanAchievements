@@ -34,6 +34,7 @@ public class Config {
 			}
 		}
 		Configuration config = new Configuration(conf);
+		config.getBoolean("override", "general", true, "Server can override this config and reload your achievements on the run?");
 		String[] list = config.getStringList("Achievements", "general",new String[]{"hit-block:Adventure !:The start of something great!:redstone:0:0:false:-1:"}, "(Input the format like) String-internalname: String-name : String-description : String-icon : int-posy : int-posx : boolean-special : int-ParentInternal:String Backgroundcolor:String statid:int count");
 		config.save();
 		for(Achievement x : BetterThanAchievements.mainpage.getAchievements()){

@@ -50,9 +50,11 @@ public class ConfigFetchMessage implements IMessage, IMessageHandler<ConfigFetch
 	public ConfigFetchMessage onMessage(ConfigFetchMessage message, MessageContext ctx) {
 		File x = new File(BetterThanAchievements.confpath+"/betterthanachievements/betterthanachievements.cfg");
 		try {
-			Files.write(message.toSend, x, StandardCharsets.UTF_8);
-			Config.loadConfig(x.getParentFile());
-			Minecraft.getMinecraft().scheduleResourcesRefresh();
+			if(new Configuration(x).getBoolean("override", "general", true, "server can override")){
+			 Files.write(message.toSend, x, StandardCharsets.UTF_8);
+			 Config.loadConfig(x.getParentFile());
+			 Minecraft.getMinecraft().scheduleResourcesRefresh();
+			}
 		} catch (IOException e) {}
 		return null;
 	}

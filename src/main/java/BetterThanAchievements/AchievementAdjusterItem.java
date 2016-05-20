@@ -58,7 +58,7 @@ public class AchievementAdjusterItem extends Item{
 			TileEntity tiley = worldIn.getTileEntity(pos);
 			if(tiley != null && tiley instanceof AchievementsCheckBlockTilentity){
 				AchievementsCheckBlockTilentity tile = (AchievementsCheckBlockTilentity) tiley;
-				if(!playerIn.isSneaking()){
+				if(playerIn.isSneaking()){
 					Achievement data = BetterThanAchievements.getAchievement(achievement);
 					if(data != null){
 						tile.setAchievementInt(achievement);
@@ -71,12 +71,6 @@ public class AchievementAdjusterItem extends Item{
 					}
 				}
 			}else{
-				Config.loadConfig(new File(BetterThanAchievements.confpath));
-				File x = new File(BetterThanAchievements.confpath+"/betterthanachievements/betterthanachievements.cfg");
-				try {
-					String data = BetterThanAchievements.readFile(x.getAbsolutePath(), StandardCharsets.UTF_8);
-					MessageHandler.INSTANCE.sendToAll(new ConfigFetchMessage(data));
-				} catch (IOException e) {}
 				if(BetterThanAchievements.mainpage.getAchievements().size()-1 > achievement){
 					achievement++;
 				}else{

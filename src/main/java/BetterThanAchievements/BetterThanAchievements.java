@@ -10,12 +10,16 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.google.common.collect.Maps;
+
 import BetterThanAchievements.achievements.AchievementBPage;
+import BetterThanAchievements.achievements.ReloadSyncCommand;
 import BetterThanAchievements.proxy.CommonProxy;
 import betterachievements.handler.MessageHandler;
 import betterachievements.reference.Reference;
 import betterachievements.registry.AchievementRegistry;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -24,13 +28,16 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -82,7 +89,12 @@ public class BetterThanAchievements {
     public static Long unixtime(){
 		return System.currentTimeMillis() / 1000L;
 	}
-    static String readFile(String path, Charset encoding) 
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event)
+    {
+      event.registerServerCommand(new ReloadSyncCommand());
+    }
+    public static String readFile(String path, Charset encoding) 
     		  throws IOException 
     		{
     		  byte[] encoded = Files.readAllBytes(Paths.get(path));
