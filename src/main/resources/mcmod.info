@@ -8,9 +8,10 @@
     "url": "https://github.com/alekso56/BetterThanAchievements",
     "updateUrl": "",
     "authors": [
-        "alekso56"
+        "alekso56",
+        "way2muchnoise"
     ],
-    "credits": "By alekso56",
+    "credits": "By alekso56, submodule by way2muchnoise",
     "logoFile": "/bta.png",
     "screenshots": [
     ],

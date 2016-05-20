@@ -1,4 +1,4 @@
-package BetterThanAchievements;
+package BetterThanAchievements.achievements;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
@@ -14,6 +14,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import BetterThanAchievements.BetterThanAchievements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
