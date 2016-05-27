@@ -75,6 +75,10 @@ public class ColourHelper
         if (!colour.startsWith("#") || !(colour.length() == 7)) throw new IllegalArgumentException("Use #RRGGBB format");
         return RGB(Integer.parseInt(colour.substring(1, 3), 16), Integer.parseInt(colour.substring(3, 5), 16), Integer.parseInt(colour.substring(5, 7), 16));
     }
+    
+    public static String hex(int r,int g,int b){
+    	return String.format("#%02x%02x%02x", r, g, b);
+    }
 
     /**
      * Blends given int colours

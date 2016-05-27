@@ -46,7 +46,7 @@ public class AchievementAdjusterItem extends Item{
 		setUnlocalizedName("achadjuster");
 		setRegistryName("achadjuster");
 		GameRegistry.register(this);
-		setCreativeTab(CreativeTabs.tabRedstone);
+		setCreativeTab(CreativeTabs.REDSTONE);
 		this.achievement = 0;
 	}
 	/**

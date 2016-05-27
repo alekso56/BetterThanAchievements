@@ -14,6 +14,8 @@ import com.google.common.collect.Maps;
 
 import BetterThanAchievements.achievements.AchievementBPage;
 import BetterThanAchievements.achievements.ReloadSyncCommand;
+import BetterThanAchievements.opencomputers.AchCard;
+import BetterThanAchievements.opencomputers.AchCardItem;
 import BetterThanAchievements.proxy.CommonProxy;
 import betterachievements.handler.MessageHandler;
 import betterachievements.reference.Reference;
@@ -30,6 +32,8 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -43,40 +47,45 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(version = "0.1337", modid = Reference.RESOURCE_ID,name= Reference.ID)
+@Mod(version = "0.1337", modid = Reference.RESOURCE_ID,name= Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
-//goal1: have achievements that can be unlocked by computers .unlockAchievement("playername","achievementname")
-//goal2: be able to check achievements from computer .checkAchievement("playername","achievementname")
 //goal3: block that outputs redstone signal when the player has the achievement for the set achievement
 	@Mod.Instance(Reference.RESOURCE_ID)
     public static BetterThanAchievements instance;
     
-    @SidedProxy(serverSide = "BetterThanAchievements.proxy.CommonProxy", clientSide = "BetterThanAchievements.proxy.ClientProxy")
+    @SidedProxy(serverSide = Reference.ID+".proxy.CommonProxy", clientSide = Reference.ID+".proxy.ClientProxy")
     public static CommonProxy proxy;
     
     public static AchievementCheckBlock blocky;
     public static AchievementAdjusterItem itemy;
+    public static AchCardItem achycardy;
     public static AchievementBPage mainpage;
     public static String confpath;
     public static Map<String, StatBase> oneShotStats;
-    static enum states {
-    	walk,
-    	hithead
-    };
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        mainpage = new AchievementBPage("BetterThanAchievements",new Achievement("placeholder", "placeholder", 0, 0, Items.gunpowder, null));
+        mainpage = new AchievementBPage(Reference.ID,new Achievement(Reference.ID, Reference.ID, 0, 0, Items.GUNPOWDER, null));
         mainpage.registerAchievementPage(mainpage);
         // load config
         Config.loadConfig(event.getSuggestedConfigurationFile().getParentFile());
         //register stuff
-        blocky = new AchievementCheckBlock(Material.cloth);
-        itemy = new AchievementAdjusterItem(Material.cloth);
+        blocky = new AchievementCheckBlock(Material.CLOTH);
+        itemy = new AchievementAdjusterItem(Material.CLOTH);
+        if(Loader.isModLoaded("OpenComputers")){
+       	 achycardy = new AchCardItem(Material.IRON);
+      	}
         proxy.setupTextures();
         proxy.registerHandlers();
         proxy.initConfig(event.getModConfigurationDirectory());
         MessageHandler.init();
         this.oneShotStats = idmap.getOneShotStats();
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent e) {
+    	if(Loader.isModLoaded("OpenComputers")){
+            li.cil.oc.api.Driver.add(new AchCard());
+    	}
     }
     
     public static Achievement getAchievement(int i){
@@ -104,6 +113,6 @@ public class BetterThanAchievements {
 }
 class idmap extends StatList {
     static Map<String, StatBase> getOneShotStats() {
-        return StatList.idToStatMap;
+        return StatList.ID_TO_STAT_MAP;
     }
 }

@@ -6,9 +6,13 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
+import net.minecraft.stats.AchievementList;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class AchievementGenerator extends Achievement implements ICustomBackgroundColour{
-
+    Integer color = 0;
+    Integer statRepeatCount = null;
+    String statid = null;
 	public AchievementGenerator(String id, String name, int column, int row, Item item, Achievement parent)
     {
         super(id, name, column, row, item, parent);
@@ -23,10 +27,22 @@ public class AchievementGenerator extends Achievement implements ICustomBackgrou
     {
         super(id, name, column, row, itemStack, parent);
     }
+    
+    public void setBackgroundColor(Integer d){
+    	this.color = d;
+    }
 
 	@Override
 	public int recolourBackground(float greyScale) {
-		return ColourHelper.blendWithGreyScale(ColourHelper.RGB(255, 0, 0), greyScale);
+		return ColourHelper.blendWithGreyScale(color, greyScale);
+	}
+
+	public void setStatCount(int parseInt) {
+		this.statRepeatCount = parseInt;
+	}
+
+	public void setStatToCheck(String statId) {
+		this.statid = statId;
 	}
 
 }

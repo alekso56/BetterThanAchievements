@@ -25,8 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
-import net.minecraft.stats.StatFileWriter;
-import net.minecraft.stats.StatisticsFile;
+import net.minecraft.stats.StatisticsManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.AchievementPage;
@@ -76,7 +75,7 @@ public class GuiBetterAchievements extends GuiScreen
             colourUnlockedRainbow, colourCanUnlockRainbow, colourCantUnlockRainbow;
     public static float[] colourUnlockedRainbowSettings, colourCanUnlockRainbowSettings, colourCantUnlockRainbowSettings;
     private GuiScreen prevScreen;
-    private StatFileWriter statisticsManager;
+    private StatisticsManager statisticsManager;
     private int top, left;
     private float scale;
     private boolean pause, newDrag;
@@ -322,34 +321,34 @@ public class GuiBetterAchievements extends GuiScreen
             int antiJumpX = (this.xPos - minDisplayColumn) % 16;
             int antiJumpY = (this.yPos - minDisplayRow) % 16;
             // TODO: some smarter background gen
-            this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             for (int y = 1; y * scale - antiJumpY < innerHeight + borderWidthY; y++)
             {
                 float darkness = 0.7F - (dragY + y) / 80.0F;
                 GlStateManager.color(darkness, darkness, darkness, 1.0F);
-                this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+                this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
                 for (int x = 1; x * scale - antiJumpX < innerWidth + borderWidthX; x++)
                 {
                     random.setSeed(this.mc.getSession().getPlayerID().hashCode() + dragY + y + (dragX + x) * 16);
                     int r = random.nextInt(1 + dragY + y) + (dragY + y) / 2;
-                    TextureAtlasSprite icon = RenderHelper.getIcon(Blocks.grass);
+                    TextureAtlasSprite icon = RenderHelper.getIcon(Blocks.GRASS);
                     if (r == 40)
                     {
                         if (random.nextInt(3) == 0)
-                            icon = RenderHelper.getIcon(Blocks.diamond_ore);
+                            icon = RenderHelper.getIcon(Blocks.DIAMOND_ORE);
                         else
-                            icon = RenderHelper.getIcon(Blocks.redstone_ore);
+                            icon = RenderHelper.getIcon(Blocks.REDSTONE_ORE);
                     }
                     else if (r == 20)
-                        icon = RenderHelper.getIcon(Blocks.iron_ore);
+                        icon = RenderHelper.getIcon(Blocks.IRON_ORE);
                     else if (r == 12)
-                        icon = RenderHelper.getIcon(Blocks.coal_ore);
+                        icon = RenderHelper.getIcon(Blocks.COAL_ORE);
                     else if (r > 60)
-                        icon = RenderHelper.getIcon(Blocks.bedrock);
+                        icon = RenderHelper.getIcon(Blocks.BEDROCK);
                     else if (r > 4)
-                        icon = RenderHelper.getIcon(Blocks.stone);
+                        icon = RenderHelper.getIcon(Blocks.STONE);
                     else if (r > 0)
-                        icon = RenderHelper.getIcon(Blocks.dirt);
+                        icon = RenderHelper.getIcon(Blocks.DIRT);
 
                     this.drawTexturedModalRect(x * blockSize - antiJumpX, y * blockSize - antiJumpY, icon, blockSize, blockSize);
                 }
@@ -362,7 +361,7 @@ public class GuiBetterAchievements extends GuiScreen
 
     private void drawArrow(Achievement achievement, int colourCantUnlock, int colourCanUnlock, int colourUnlocked)
     {
-        int depth = this.statisticsManager.func_150874_c(achievement); // How far is the nearest unlocked parent
+        int depth = this.statisticsManager.countRequirementsUntilAvailable(achievement); // How far is the nearest unlocked parent
 
         if (depth < 5)
         {
@@ -425,7 +424,7 @@ public class GuiBetterAchievements extends GuiScreen
 
         if (!onScreen(achievementXPos, achievementYPos)) return;
 
-        int depth = this.statisticsManager.func_150874_c(achievement);
+        int depth = this.statisticsManager.countRequirementsUntilAvailable(achievement);
         boolean unlocked = this.statisticsManager.hasAchievementUnlocked(achievement);
         boolean canUnlock = this.statisticsManager.canUnlockAchievement(achievement);
         boolean special = achievement.getSpecial();
@@ -513,7 +512,7 @@ public class GuiBetterAchievements extends GuiScreen
             String title = this.hoveredAchievement.getStatName().getUnformattedText();
             String desc = this.hoveredAchievement.getDescription();
 
-            int depth = this.statisticsManager.func_150874_c(this.hoveredAchievement);
+            int depth = this.statisticsManager.countRequirementsUntilAvailable(this.hoveredAchievement);
             boolean unlocked = this.statisticsManager.hasAchievementUnlocked(this.hoveredAchievement);
             boolean canUnlock = this.statisticsManager.canUnlockAchievement(this.hoveredAchievement);
             boolean special = this.hoveredAchievement.getSpecial();

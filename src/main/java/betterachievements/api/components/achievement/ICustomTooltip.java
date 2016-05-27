@@ -1,6 +1,6 @@
 package betterachievements.api.components.achievement;
 
-import net.minecraft.stats.StatFileWriter;
+import net.minecraft.stats.StatisticsManager;
 
 public interface ICustomTooltip
 {
@@ -11,5 +11,5 @@ public interface ICustomTooltip
      * @param mouseY mouse Y position
      * @param statisticsManager the {@link StatisticsManager} this can be used to gather info related to the {@link net.minecraft.stats.Achievement}
      */
-    void renderTooltip(int mouseX, int mouseY, StatFileWriter statisticsManager);
+    void renderTooltip(int mouseX, int mouseY, StatisticsManager statisticsManager);
 }

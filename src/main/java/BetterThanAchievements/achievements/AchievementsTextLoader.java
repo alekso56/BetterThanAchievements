@@ -18,7 +18,7 @@ import BetterThanAchievements.BetterThanAchievements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.IMetadataSerializer;
+import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -56,12 +56,12 @@ public class AchievementsTextLoader implements IResourcePack{
 	public String getPackName() {
 		return "BetterThanAchievementsLanguage";
 	}
-	
+
 	@Override
-	public <T extends IMetadataSection> T getPackMetadata(IMetadataSerializer metadataSerializer,
+	public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer metadataSerializer,
 			String metadataSectionName) throws IOException {return null;}
 
 	@Override
 	public BufferedImage getPackImage() throws IOException {return null;}
-
+	
 }

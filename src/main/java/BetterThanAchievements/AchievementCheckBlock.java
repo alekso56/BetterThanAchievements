@@ -1,6 +1,5 @@
 package BetterThanAchievements;
 
-import BetterThanAchievements.BetterThanAchievements.states;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
@@ -32,38 +31,30 @@ import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class AchievementCheckBlock extends Block {
-	public static final AxisAlignedBB FULL_BLOCK_AABB1 = new AxisAlignedBB(0.0D, 0.1D, 0.0D, 1.0D, 1.0D, 1.0D);
+	public static final AxisAlignedBB FULL_BLOCK_AABB1 = new AxisAlignedBB(0.0D, 0.1D, 0.0D, 1.0D, 0.9D, 1.0D);
 	protected AchievementCheckBlock(Material materialIn) {
-		super(Material.cloth);
+		super(Material.CLOTH);
 		setHardness(1.5f);
 		setUnlocalizedName("checkblock");
 		setRegistryName("checkblock");
 		GameRegistry.register(this);
 		GameRegistry.register(new ItemBlock(this).setRegistryName(getRegistryName()));
 		GameRegistry.registerTileEntity(AchievementsCheckBlockTilentity.class, "betterthanachievements:checkblock");
-		setCreativeTab(CreativeTabs.tabRedstone);
-		setStepSound(SoundType.CLOTH);
+		setCreativeTab(CreativeTabs.REDSTONE);
 		setTickRandomly(false);
 	}
-	//player walks on block
-	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, Entity entityIn)
-	{
-		collisionEvent(worldIn, pos, entityIn, states.walk);
-	}
-	//player hits head on block
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
 	{
-        collisionEvent(worldIn, pos, entityIn, states.hithead);
+        collisionEvent(worldIn, pos, entityIn);
 	}
-	void collisionEvent(World worldIn,BlockPos pos,Entity entityIn,states state){
+	void collisionEvent(World worldIn,BlockPos pos,Entity entityIn){
 		if(worldIn != null && !worldIn.isRemote){
 			if(entityIn instanceof EntityPlayerMP){
 				EntityPlayerMP player = (EntityPlayerMP) entityIn;
 				if(worldIn.getTileEntity(pos) != null){
 					AchievementsCheckBlockTilentity tile = (AchievementsCheckBlockTilentity) worldIn.getTileEntity(pos);
-					tile.onCollision(state,player);
+					tile.onCollision(player);
 				}
 
 			}
