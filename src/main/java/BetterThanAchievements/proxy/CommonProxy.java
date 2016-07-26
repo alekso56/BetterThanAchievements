@@ -2,7 +2,6 @@ package BetterThanAchievements.proxy;
 
 import java.io.File;
 
-import BetterThanAchievements.BetterThanAchievements;
 import betterachievements.handler.AchievementHandler;
 import betterachievements.handler.ConfigHandler;
 import net.minecraft.util.ResourceLocation;

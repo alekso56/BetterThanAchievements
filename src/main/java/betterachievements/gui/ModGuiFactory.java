@@ -1,10 +1,10 @@
 package betterachievements.gui;
 
+import java.util.Set;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
-
-import java.util.Set;
 
 public class ModGuiFactory implements IModGuiFactory
 {

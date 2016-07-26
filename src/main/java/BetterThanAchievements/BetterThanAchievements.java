@@ -1,7 +1,6 @@
 package BetterThanAchievements;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,16 +8,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.google.common.collect.Maps;
 
 import BetterThanAchievements.achievements.AchievementBPage;
 import BetterThanAchievements.achievements.ReloadSyncCommand;
@@ -27,41 +21,18 @@ import BetterThanAchievements.opencomputers.AchCardItem;
 import BetterThanAchievements.proxy.CommonProxy;
 import betterachievements.handler.MessageHandler;
 import betterachievements.reference.Reference;
-import betterachievements.registry.AchievementRegistry;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.LanguageMap;
-import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.UsernameCache;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ModMetadata;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.fml.server.FMLServerHandler;
-import scala.reflect.io.Path;
 
 @Mod(version = "0.1337", modid = Reference.RESOURCE_ID,name= Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
@@ -84,6 +55,7 @@ public class BetterThanAchievements {
         mainpage = new AchievementBPage(Reference.ID,new Achievement(Reference.ID, Reference.ID, 0, 0, Items.GUNPOWDER, null));
         mainpage.registerAchievementPage(mainpage);
         // load config
+        proxy.initConfig(event.getModConfigurationDirectory());
         Config.loadConfig(event.getSuggestedConfigurationFile().getParentFile());
         //register stuff
         blocky = new AchievementCheckBlock(Material.CLOTH);
@@ -94,7 +66,6 @@ public class BetterThanAchievements {
         proxy.setupTextures();
         proxy.registerHandlers();
         proxy.registerSounds();
-        proxy.initConfig(event.getModConfigurationDirectory());
         MessageHandler.init();
         this.oneShotStats = idmap.getOneShotStats();
     }
@@ -119,7 +90,7 @@ public class BetterThanAchievements {
     
     static Map<String, UUID> invert(Map<UUID, String> map) {
 
-    	Map<String, UUID> hashy = new HashMap<>();
+    	Map<String, UUID> hashy = new HashMap<String, UUID>();
 		for(Entry<UUID, String> entry : map.entrySet()){
 			hashy.put(entry.getValue(), entry.getKey());
     	}

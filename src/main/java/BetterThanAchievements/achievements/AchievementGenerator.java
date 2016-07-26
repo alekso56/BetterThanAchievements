@@ -6,8 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.stats.AchievementList;
-import net.minecraft.util.text.TextComponentTranslation;
 
 public class AchievementGenerator extends Achievement implements ICustomBackgroundColour{
     Integer color = 0;

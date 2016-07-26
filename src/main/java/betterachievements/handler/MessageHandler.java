@@ -2,7 +2,6 @@ package betterachievements.handler;
 
 import betterachievements.handler.message.AchievementUnlockMessage;
 import betterachievements.handler.message.ConfigFetchMessage;
-import betterachievements.reference.Reference;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 

@@ -1,27 +1,19 @@
 package BetterThanAchievements.opencomputers;
 
-import java.util.List;
-
 import BetterThanAchievements.BetterThanAchievements;
 import li.cil.oc.api.Network;
-import li.cil.oc.api.driver.*;
-import li.cil.oc.api.driver.item.Container;
 import li.cil.oc.api.driver.item.Slot;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
-import li.cil.oc.api.network.*;
 import li.cil.oc.api.network.EnvironmentHost;
+import li.cil.oc.api.network.ManagedEnvironment;
+import li.cil.oc.api.network.Visibility;
 import li.cil.oc.api.prefab.DriverItem;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.ReportedException;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.server.FMLServerHandler;
 
 public class AchCard extends DriverItem {

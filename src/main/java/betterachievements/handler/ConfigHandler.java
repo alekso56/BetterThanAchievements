@@ -1,5 +1,9 @@
 package betterachievements.handler;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import betterachievements.api.util.ColourHelper;
 import betterachievements.gui.GuiBetterAchievements;
 import betterachievements.reference.Reference;
@@ -11,10 +15,6 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConfigHandler
 {

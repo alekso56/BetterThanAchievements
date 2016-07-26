@@ -1,5 +1,10 @@
 package betterachievements.registry;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import betterachievements.api.components.page.ICustomIcon;
 import betterachievements.util.LogHelper;
 import net.minecraft.init.Blocks;
@@ -12,11 +17,6 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.AchievementPage;
-
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public final class AchievementRegistry
 {

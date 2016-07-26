@@ -5,25 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 
-import BetterThanAchievements.achievements.AchievementBPage;
 import BetterThanAchievements.achievements.AchievementGenerator;
 import betterachievements.api.util.ColourHelper;
-import betterachievements.registry.AchievementRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.config.Configuration;
 
 public class Config {

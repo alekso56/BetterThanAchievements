@@ -1,16 +1,8 @@
 package betterachievements.handler.message;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import org.apache.commons.lang3.CharSet;
 
 import com.google.common.io.Files;
 
@@ -18,10 +10,6 @@ import BetterThanAchievements.BetterThanAchievements;
 import BetterThanAchievements.Config;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

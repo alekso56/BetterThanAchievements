@@ -1,5 +1,15 @@
 package betterachievements.gui;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import betterachievements.api.components.achievement.ICustomBackgroundColour;
 import betterachievements.api.components.achievement.ICustomIconRenderer;
 import betterachievements.api.components.achievement.ICustomTooltip;
@@ -31,15 +41,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 @SideOnly(Side.CLIENT)
 public class GuiBetterAchievements extends GuiScreen
