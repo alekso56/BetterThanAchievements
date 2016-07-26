@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -105,10 +106,10 @@ public class BetterThanAchievements {
     	//here we parse crashlogs for the crash achievements.
     	PlayersInServerCrashes = new HashMap<UUID, Integer>();
     	try {
-    		Iterator<java.nio.file.Path> data = Files.list(Paths.get("./crash-reports")).iterator();
+    		Iterator<Path> data = Files.list(Paths.get("./crash-reports")).iterator();
     		Map<String, UUID> playerdata = invert(UsernameCache.getMap());
     		while(data.hasNext()){
-    			java.nio.file.Path dEntry = data.next();
+    			Path dEntry = data.next();
     			String line;
     			try (
     					InputStream fis = new FileInputStream(dEntry.toFile().getPath());
