@@ -74,6 +74,7 @@ public class Config {
 				"Ender Utilities",
 				"Engination",
 				"Extra Food",
+				"E-Flux",
 				"FancyFluidStorage",
 				"Fire's Random Things",
 				"Flamingo",
@@ -95,6 +96,7 @@ public class Config {
 				"OpenComputers",
 				"OpenGlasses",
 				"OpenRadio",
+				"Parcels and Packages",
 				"Progressive Automation",
 				"Quaritum",
 				"Quark",
@@ -119,9 +121,16 @@ public class Config {
 				"Translocators",
 				"TrashSlot",
 				"Vampirism",
-				"Vimmersion",
+				"Vanilla immersion",
 				"WeaponsPlus",
-				"YeOldeTanks"};
+				"YeOldeTanks",
+				"Sprockets",
+				"Soul Shards: The Old Ways",
+				"Metallurgy 5",
+				"MahMeat",
+				"Framez 3",
+				"XNet",
+				"Wireless Redstone"};
 		Integer achy = -10;
 		Integer row = 0;
 		Random rand = new Random();
