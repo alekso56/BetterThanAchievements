@@ -1,0 +1,12 @@
+
+{
+	"achievement.hitblock": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterthanachievements:hitblock",
+				"stream": false
+			}
+		]
+	}
+}

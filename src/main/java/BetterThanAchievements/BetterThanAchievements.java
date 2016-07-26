@@ -1,13 +1,21 @@
 package BetterThanAchievements;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.common.collect.Maps;
@@ -22,16 +30,20 @@ import betterachievements.reference.Reference;
 import betterachievements.registry.AchievementRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ReportedException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -42,10 +54,14 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.server.FMLServerHandler;
+import scala.reflect.io.Path;
 
 @Mod(version = "0.1337", modid = Reference.RESOURCE_ID,name= Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
@@ -62,6 +78,7 @@ public class BetterThanAchievements {
     public static AchievementBPage mainpage;
     public static String confpath;
     public static Map<String, StatBase> oneShotStats;
+    public static Map<UUID, Integer> PlayersInServerCrashes; //player, amount of crashes
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         mainpage = new AchievementBPage(Reference.ID,new Achievement(Reference.ID, Reference.ID, 0, 0, Items.GUNPOWDER, null));
@@ -76,6 +93,7 @@ public class BetterThanAchievements {
       	}
         proxy.setupTextures();
         proxy.registerHandlers();
+        proxy.registerSounds();
         proxy.initConfig(event.getModConfigurationDirectory());
         MessageHandler.init();
         this.oneShotStats = idmap.getOneShotStats();
@@ -98,10 +116,59 @@ public class BetterThanAchievements {
     public static Long unixtime(){
 		return System.currentTimeMillis() / 1000L;
 	}
+    
+    static Map<String, UUID> invert(Map<UUID, String> map) {
+
+    	Map<String, UUID> hashy = new HashMap<>();
+		for(Entry<UUID, String> entry : map.entrySet()){
+			hashy.put(entry.getValue(), entry.getKey());
+    	}
+		return hashy;
+    }
+    
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event)
     {
-      event.registerServerCommand(new ReloadSyncCommand());
+    	event.registerServerCommand(new ReloadSyncCommand());
+    	
+    	//here we parse crashlogs for the crash achievements.
+    	PlayersInServerCrashes = new HashMap<UUID, Integer>();
+    	try {
+    		Iterator<java.nio.file.Path> data = Files.list(Paths.get("./crash-reports")).iterator();
+    		Map<String, UUID> playerdata = invert(UsernameCache.getMap());
+    		while(data.hasNext()){
+    			java.nio.file.Path dEntry = data.next();
+    			String line;
+    			try (
+    					InputStream fis = new FileInputStream(dEntry.toFile().getPath());
+    					InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+    					BufferedReader br = new BufferedReader(isr);
+    					) {
+    				while ((line = br.readLine()) != null) {
+    					if(line.startsWith("\tPlayer Count") && !line.startsWith("\tPlayer Count: 0")){
+    						String lines = line.split("; ",2)[1];
+    						String[] players = lines.split("], ");
+    						for(String x : players){
+    							x = x.replace("lr[","");
+    							x = x.replace("GCEntityPlayerMP[", "");
+    							x = x.replace("[","");
+    							x = x.replace("]", "");
+
+    							String username = x.split(",",2)[0];
+    							username = username.replace("'", "");
+    							username = username.split("/",2)[0];
+    							UUID uuid = playerdata.get(username);
+    							if(uuid != null){
+    								Integer uuidEntry = PlayersInServerCrashes.containsKey(uuid)?PlayersInServerCrashes.get(uuid):0;
+    								uuidEntry = uuidEntry+1;
+    								PlayersInServerCrashes.put(uuid, uuidEntry);
+    							}
+    						}
+    					}
+    				}
+    			}
+    		}
+    	} catch (IOException e) {}
     }
     public static String readFile(String path, Charset encoding) 
     		  throws IOException 

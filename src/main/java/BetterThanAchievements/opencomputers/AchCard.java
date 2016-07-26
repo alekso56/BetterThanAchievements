@@ -13,12 +13,14 @@ import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.*;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.prefab.DriverItem;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.server.FMLServerHandler;
 

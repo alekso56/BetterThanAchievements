@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,6 +62,7 @@ public class AchievementsCheckBlockTilentity extends TileEntity{
 			if(unlockable != null){
 				if(!player.getStatFile().hasAchievementUnlocked(unlockable)){
 					player.addStat(unlockable, 1);
+					player.worldObj.playSound(null, getPos(), BetterThanAchievements.proxy.achievement_hitblock, SoundCategory.RECORDS, 0.5F, 1F);
 					return false;
 				}else{
 					return true;

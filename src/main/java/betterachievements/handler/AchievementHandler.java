@@ -1,18 +1,25 @@
 package betterachievements.handler;
 
+import betterachievements.registry.AchievementRegistry;
 import betterachievements.util.LogHelper;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
+import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatisticsManager;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.*;
+
+import BetterThanAchievements.BetterThanAchievements;
 
 public class AchievementHandler
 {
@@ -33,6 +40,33 @@ public class AchievementHandler
         this.playerAchievementMap = new HashMap<UUID, Set<Achievement>>();
         this.currentItrs = new HashSet<UUID>();
     }
+    
+    @SubscribeEvent
+    public void playerjoin(PlayerLoggedInEvent ev){
+    	Integer CrashSurvivalCount = BetterThanAchievements.PlayersInServerCrashes.get(ev.player.getUniqueID());
+    	if(CrashSurvivalCount != null){
+    		Achievement achievement = getAchievement("servercrash"+CrashSurvivalCount);
+        	if(achievement != null){
+        			if(ev.player instanceof EntityPlayerMP){
+        				EntityPlayerMP player = (EntityPlayerMP) ev.player;
+            			player.getStatFile().unlockAchievement(player, achievement, 1);
+        			}
+        	}
+    	}
+		/*for(AchievementPage page :AchievementRegistry.instance().getAllPages()){
+		 ItemStack itemStack = AchievementRegistry.instance().getItemStack(page);
+		 System.out.println(page.getName()+":"+itemStack.getItem().getRegistryName());
+		}*/
+    }
+    
+	public static Achievement getAchievement(String achievement){
+		StatBase x = BetterThanAchievements.oneShotStats.get("achievement."+achievement);
+		if(x != null && x.isAchievement()){
+			Achievement y = (Achievement) x;
+			return y;
+		}
+		return null;
+	}
 
     @SubscribeEvent
     public void onAchievementUnlocked(AchievementEvent event)
