@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -23,7 +24,10 @@ import betterthanachievements.opencomputers.AchCard;
 import betterthanachievements.opencomputers.AchCardItem;
 import betterthanachievements.proxy.CommonProxy;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
@@ -34,6 +38,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(version = "0.1337", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
@@ -52,7 +58,34 @@ public class BetterThanAchievements {
 	public static String confpath;
 	public static Map<String, StatBase> oneShotStats;
 	public static Map<UUID, Integer> PlayersInServerCrashes; // player, amount
-																// of crashes
+	// of crashes
+	public static CreativeTabs AchTab = new CreativeTabs("BetterThanAchievements") {
+		@Override
+		public Item getTabIconItem() {
+			return new ItemStack(Items.BAKED_POTATO,1,0).getItem();
+		}
+		@Override
+		@SideOnly(Side.CLIENT)
+		public String getTranslatedTabLabel()
+		{
+			return this.getTabLabel();
+		}
+
+		@Override
+		@SideOnly(Side.CLIENT)
+		public void displayAllRelevantItems(List<ItemStack> list){
+			super.displayAllRelevantItems(list);
+			for(Integer size=0;size<BetterThanAchievements.mainpage.getAchievements().size();size++) {
+				Achievement data = BetterThanAchievements.getAchievement(size);
+				if(data != null){
+					ItemStack fin = new ItemStack(itemy);
+					fin.setStackDisplayName(data.getStatName().getFormattedText());
+					fin.setItemDamage(size);
+					list.add(fin);
+				}
+			}
+		}
+	};
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
