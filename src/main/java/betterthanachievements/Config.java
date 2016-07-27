@@ -92,10 +92,13 @@ public class Config {
 						AchievementGenerator parent = null;
 						if(!parentListInternalName.isEmpty() && !parentListInternalName.equals("null")){
 							for(AchievementGenerator achievement:achievements){
-								if(achievement.getStatName().equals("achievement."+parentListInternalName)){
+								if(achievement.getStatName().getUnformattedText().equals("achievement." + parentListInternalName)){
 									parent = achievement;
 									break;
 								}
+							}
+							if(parent == null){
+								System.out.println("Invalid internal name: "+parentListInternalName);
 							}
 						}
 
