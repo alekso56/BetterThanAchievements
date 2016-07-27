@@ -42,7 +42,7 @@ public class BetterThanAchievements {
 	@Mod.Instance(Reference.RESOURCE_ID)
 	public static BetterThanAchievements instance;
 
-	@SidedProxy(serverSide = Reference.ID + ".proxy.CommonProxy", clientSide = Reference.ID + ".proxy.ClientProxy")
+	@SidedProxy(serverSide = Reference.RESOURCE_ID + ".proxy.CommonProxy", clientSide = Reference.RESOURCE_ID + ".proxy.ClientProxy")
 	public static CommonProxy proxy;
 
 	public static AchievementCheckBlock blocky;
@@ -60,8 +60,8 @@ public class BetterThanAchievements {
 				new Achievement(Reference.ID, Reference.ID, 0, 0, Items.GUNPOWDER, null));
 		mainpage.registerAchievementPage(mainpage);
 		// load config
-		proxy.initConfig(event.getModConfigurationDirectory());
 		Config.loadConfig(event.getSuggestedConfigurationFile().getParentFile());
+		proxy.initConfig(event.getModConfigurationDirectory());
 		// register stuff
 		blocky = new AchievementCheckBlock(Material.CLOTH);
 		itemy = new AchievementAdjusterItem(Material.CLOTH);
