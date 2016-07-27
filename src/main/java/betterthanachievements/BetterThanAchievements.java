@@ -41,7 +41,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(version = "0.1337", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
+@Mod(version = "0.1338", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
 	// goal3: block that outputs redstone signal when the player has the
 	// achievement for the set achievement
@@ -62,7 +62,7 @@ public class BetterThanAchievements {
 	public static CreativeTabs AchTab = new CreativeTabs("BetterThanAchievements") {
 		@Override
 		public Item getTabIconItem() {
-			return new ItemStack(Items.BAKED_POTATO,1,0).getItem();
+			return new ItemStack(blocky,1,0).getItem();
 		}
 		@Override
 		@SideOnly(Side.CLIENT)
