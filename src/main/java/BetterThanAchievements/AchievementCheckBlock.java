@@ -1,4 +1,4 @@
-package BetterThanAchievements;
+package betterthanachievements;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class AchievementCheckBlock extends Block {
 	public static final AxisAlignedBB FULL_BLOCK_AABB1 = new AxisAlignedBB(0.0D, 0.1D, 0.0D, 1.0D, 0.9D, 1.0D);
+
 	protected AchievementCheckBlock(Material materialIn) {
 		super(Material.CLOTH);
 		setHardness(1.5f);
@@ -27,38 +28,37 @@ public class AchievementCheckBlock extends Block {
 		setCreativeTab(CreativeTabs.REDSTONE);
 		setTickRandomly(false);
 	}
+
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
-	{
-        collisionEvent(worldIn, pos, entityIn);
+	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+		collisionEvent(worldIn, pos, entityIn);
 	}
-	void collisionEvent(World worldIn,BlockPos pos,Entity entityIn){
-		if(worldIn != null && !worldIn.isRemote){
-			if(entityIn instanceof EntityPlayerMP){
+
+	void collisionEvent(World worldIn, BlockPos pos, Entity entityIn) {
+		if (worldIn != null && !worldIn.isRemote) {
+			if (entityIn instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP) entityIn;
-				if(worldIn.getTileEntity(pos) != null){
+				if (worldIn.getTileEntity(pos) != null) {
 					AchievementsCheckBlockTilentity tile = (AchievementsCheckBlockTilentity) worldIn.getTileEntity(pos);
 					tile.onCollision(player);
 				}
 
 			}
-		}else if(worldIn != null){
-			
 		}
 	}
+
 	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
+	public boolean hasTileEntity(IBlockState state) {
 		return true;
 	}
+
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new AchievementsCheckBlockTilentity();
 	}
+
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return FULL_BLOCK_AABB1;
 	}
 }

@@ -1,4 +1,4 @@
-package BetterThanAchievements;
+package betterthanachievements;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,59 +10,62 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class AchievementsCheckBlockTilentity extends TileEntity{
+public class AchievementsCheckBlockTilentity extends TileEntity {
 	private int achievement;
-    private Long timestamp;
-    private boolean isGiveBlock;
-    
-    public AchievementsCheckBlockTilentity(){
-    	this.achievement = 0;
-    	this.isGiveBlock = true;
-    }
+	private Long timestamp;
+	private boolean isGiveBlock;
+
+	public AchievementsCheckBlockTilentity() {
+		this.achievement = 0;
+		this.isGiveBlock = true;
+	}
+
 	@Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
-        super.readFromNBT(tag);
-        achievement = tag.getInteger("achievement");
-    }
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		achievement = tag.getInteger("achievement");
+	}
+
 	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
-    {
-        tag.setInteger("achievement", achievement);
-        return super.writeToNBT(tag);
-    }
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		tag.setInteger("achievement", achievement);
+		return super.writeToNBT(tag);
+	}
+
 	@Override
-    public boolean shouldRefresh(World world,BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
-    }
-	
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+		return oldState.getBlock() != newState.getBlock();
+	}
+
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-    {
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound syncData = new NBTTagCompound();
 		syncData.setInteger("achievement", this.achievement);
 		return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), syncData);
-    }
-	
-	void setAchievementInt(Integer i){
+	}
+
+	void setAchievementInt(Integer i) {
 		this.achievement = i;
 	}
-	Integer getAchievementInt(){
+
+	Integer getAchievementInt() {
 		return this.achievement;
 	}
-	boolean onCollision(EntityPlayerMP player){
-		if(timestamp == null || BetterThanAchievements.unixtime()-timestamp >= 1L){
+
+	boolean onCollision(EntityPlayerMP player) {
+		if (timestamp == null || BetterThanAchievements.unixtime() - timestamp >= 1L) {
 			timestamp = BetterThanAchievements.unixtime();
 			Achievement unlockable = BetterThanAchievements.getAchievement(achievement);
-			if(unlockable != null){
-				if(!player.getStatFile().hasAchievementUnlocked(unlockable)){
+			if (unlockable != null) {
+				if (!player.getStatFile().hasAchievementUnlocked(unlockable)) {
 					player.addStat(unlockable, 1);
-					player.worldObj.playSound(null, getPos(), BetterThanAchievements.proxy.achievement_hitblock, SoundCategory.RECORDS, 0.5F, 1F);
+					player.worldObj.playSound(null, getPos(), BetterThanAchievements.proxy.achievement_hitblock,
+							SoundCategory.RECORDS, 0.5F, 1F);
 					return false;
-				}else{
+				} else {
 					return true;
-				}}
+				}
+			}
 		}
 		return false;
 	}

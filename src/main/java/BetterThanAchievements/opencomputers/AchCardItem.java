@@ -1,4 +1,4 @@
-package BetterThanAchievements.opencomputers;
+package betterthanachievements.opencomputers;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

@@ -1,20 +1,18 @@
-package BetterThanAchievements.achievements;
+package betterthanachievements.achievements;
 
-import BetterThanAchievements.BetterThanAchievements;
 import betterachievements.api.components.page.ICustomArrows;
 import betterachievements.api.components.page.ICustomIcon;
 import betterachievements.api.util.ColourHelper;
+import betterthanachievements.BetterThanAchievements;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 
-public class AchievementBPage extends AchievementPage implements ICustomIcon,ICustomArrows
-{
-    public AchievementBPage(String name, Achievement... achievements)
-    {
-        super(name, achievements);
-    }
+public class AchievementBPage extends AchievementPage implements ICustomIcon, ICustomArrows {
+	public AchievementBPage(String name, Achievement... achievements) {
+		super(name, achievements);
+	}
 
 	@Override
 	public ItemStack getPageIcon() {
