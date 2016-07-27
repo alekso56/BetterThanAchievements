@@ -28,7 +28,7 @@ public class ConfigHandler {
 	}
 
 	public static void initConfigDir(File configDir) {
-		configDir = new File(configDir, Reference.ID);
+		configDir = new File(configDir, Reference.RESOURCE_ID);
 		configDir.mkdir();
 		ConfigHandler.configDir = configDir;
 	}
@@ -39,7 +39,7 @@ public class ConfigHandler {
 
 	@SubscribeEvent
 	public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.getModID().equalsIgnoreCase(Reference.ID)) {
+		if (event.getModID().equalsIgnoreCase(Reference.RESOURCE_ID)) {
 			loadConfig();
 		}
 	}
