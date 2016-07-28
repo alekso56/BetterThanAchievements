@@ -85,6 +85,7 @@ public class Config {
 						ItemStack achievementitem;
 						if (item == null) {
 							achievementitem = new ItemStack(Items.BONE);
+							System.out.println("Invalid icon: "+iconName+" with metadata "+metadata);
 						}else{
 							achievementitem = new ItemStack(item);
 							achievementitem.setItemDamage(metadata);
