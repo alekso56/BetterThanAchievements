@@ -20,7 +20,6 @@ public class CommonProxy {
 	}
 
 	public void initConfig(File configDir) {
-		ConfigHandler.initConfigDir(configDir);
 	}
 
 	/**

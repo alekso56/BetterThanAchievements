@@ -8,6 +8,7 @@ import betterachievements.api.util.ColourHelper;
 import betterachievements.gui.GuiBetterAchievements;
 import betterachievements.reference.Reference;
 import betterachievements.registry.AchievementRegistry;
+import betterthanachievements.BetterThanAchievements;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -18,23 +19,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
 	public static Configuration config;
-	private static File configDir;
-
+	
 	public static void init() {
 		if (config == null) {
-			config = new Configuration(new File(configDir, Reference.ID + ".cfg"));
+			File conf = new File(BetterThanAchievements.confpath + "/betterthanachievements/betterthanachievements.cfg");
+			config = new Configuration(conf);
 			loadConfig();
 		}
-	}
-
-	public static void initConfigDir(File configDir) {
-		configDir = new File(configDir, Reference.RESOURCE_ID);
-		configDir.mkdir();
-		ConfigHandler.configDir = configDir;
-	}
-
-	public static File getConfigDir() {
-		return configDir;
 	}
 
 	@SubscribeEvent
@@ -109,8 +100,8 @@ public class ConfigHandler {
 	}
 
 	public static void saveUserSetIcons() {
+		if(config == null){init();}
 		SaveHandler.userSetIcons = AchievementRegistry.instance().dumpUserSetIcons();
-
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, "listTabIcons", new String[0]);
 		prop.setComment(I18n.translateToLocal("config.listTabIcons.desc"));
 		prop.setLanguageKey("config.listTabIcons");

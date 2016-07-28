@@ -122,7 +122,7 @@ public class AchievementHandler {
 			lines.add(sb.toString());
 		}
 		try {
-			Files.write(new File(ConfigHandler.getConfigDir(), worldName + " " + FILENAME).toPath(), lines,
+			Files.write(new File(BetterThanAchievements.confpath+ "/betterthanachievements/", worldName + " " + FILENAME).toPath(), lines,
 					Charset.defaultCharset());
 		} catch (IOException e) {
 			LogHelper.instance().error(e, "couldn't write " + worldName + " " + FILENAME);
@@ -135,7 +135,7 @@ public class AchievementHandler {
 		for (Achievement achievement : AchievementList.ACHIEVEMENTS)
 			achievementMap.put(achievement.statId, achievement);
 		try {
-			File file = new File(ConfigHandler.getConfigDir(), worldName + " " + FILENAME);
+			File file = new File(BetterThanAchievements.confpath+ "/betterthanachievements/", worldName + " " + FILENAME);
 			if (!file.exists())
 				return;
 

@@ -9,6 +9,8 @@ import betterachievements.handler.SaveHandler;
 import betterthanachievements.BetterThanAchievements;
 import betterthanachievements.achievements.AchievementsTextLoader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.item.Item;
@@ -22,8 +24,9 @@ public class ClientProxy extends CommonProxy {
 	public void setupTextures() {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(BetterThanAchievements.blocky), 0,
 				new ModelResourceLocation(BetterThanAchievements.blocky.getRegistryName(), "normal"));
-		ModelLoader.setCustomModelResourceLocation(BetterThanAchievements.itemy, 0,
-				new ModelResourceLocation(BetterThanAchievements.itemy.getRegistryName(), "normal"));
+		ModelResourceLocation resource = new ModelResourceLocation(BetterThanAchievements.itemy.getRegistryName(), "normal");
+		ModelLoader.setCustomMeshDefinition(BetterThanAchievements.itemy,  MeshDefinitionFix.create(stack -> resource));
+		ModelBakery.registerItemVariants(BetterThanAchievements.itemy, resource);
 		List<IResourcePack> DefaultResourcePacks = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class,
 				Minecraft.getMinecraft(), "field_110449_ao", "field_110449_ao");
 		DefaultResourcePacks.add(new AchievementsTextLoader());
@@ -42,8 +45,6 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initConfig(File configDir) {
-		super.initConfig(configDir);
-		ConfigHandler.init();
 		MinecraftForge.EVENT_BUS.register(new ConfigHandler());
 	}
 
