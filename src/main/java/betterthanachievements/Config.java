@@ -73,6 +73,7 @@ public class Config {
 				if (dataEntry.length > 8) {
 					try {
 						String internalname = dataEntry[0];
+						System.out.println(internalname);
 						String name = dataEntry[1];
 						String description = dataEntry[2];
 						String iconName = dataEntry[3];
