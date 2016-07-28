@@ -36,12 +36,13 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(version = "0.1340", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
+@Mod(version = "0.1341", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
 	// goal3: block that outputs redstone signal when the player has the
 	// achievement for the set achievement
@@ -93,8 +94,7 @@ public class BetterThanAchievements {
 				new Achievement(Reference.ID, Reference.ID, 0, 0, Items.GUNPOWDER, null));
 		mainpage.registerAchievementPage(mainpage);
 		// load config
-		Config.loadConfig(event.getSuggestedConfigurationFile().getParentFile());
-		proxy.initConfig(event.getSuggestedConfigurationFile().getParentFile());
+		BetterThanAchievements.confpath = event.getSuggestedConfigurationFile().getParentFile().getPath();
 		// register stuff
 		blocky = new AchievementCheckBlock(Material.CLOTH);
 		itemy = new AchievementAdjusterItem(Material.CLOTH);
@@ -106,6 +106,13 @@ public class BetterThanAchievements {
 		proxy.registerSounds();
 		MessageHandler.init();
 		this.oneShotStats = idmap.getOneShotStats();
+	}
+	
+
+	@Mod.EventHandler
+	public void postInit(FMLPostInitializationEvent event){
+		Config.loadConfig(confpath);
+		proxy.initConfig(confpath);
 	}
 
 	@Mod.EventHandler

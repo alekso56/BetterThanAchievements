@@ -25,9 +25,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 public class Config {
-	public static void loadConfig(File confug) {
-		BetterThanAchievements.confpath = confug.getPath();
-		File conf = new File(confug.getPath() + "/betterthanachievements/betterthanachievements.cfg");
+	public static void loadConfig(String path) {
+		File conf = new File(path + "/betterthanachievements/betterthanachievements.cfg");
 		String[] achs = {""};
 		if(!conf.exists()){
 			try {
@@ -60,9 +59,9 @@ public class Config {
 		try {
 			// prepare folders and files
 			ArrayList<AchievementGenerator> achievements = new ArrayList<AchievementGenerator>();
-			File f = new File(confug.getPath() + "/betterthanachievements/lang/en_US.lang");
+			File f = new File(path + "/betterthanachievements/lang/en_US.lang");
 			if (!f.exists()) {
-				new File(confug.getPath() + "/betterthanachievements/lang").mkdir();
+				new File(path + "/betterthanachievements/lang").mkdir();
 				f.createNewFile();
 			}
 			FileWriter fstream = new FileWriter(f, false);
@@ -83,12 +82,9 @@ public class Config {
 						String parentListInternalName = dataEntry[8];
 
 						Item item = Item.REGISTRY.getObject(new ResourceLocation(iconName));
-						Block block = Block.REGISTRY.getObject(new ResourceLocation(iconName));
 						ItemStack achievementitem;
-						if (item == null && block == null) {
+						if (item == null) {
 							achievementitem = new ItemStack(Items.BONE);
-						}else if(item == null && block != null){
-							achievementitem = new ItemStack(Item.getItemFromBlock(block));
 						}else{
 							achievementitem = new ItemStack(item);
 							achievementitem.setItemDamage(metadata);

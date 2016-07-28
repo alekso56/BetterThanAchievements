@@ -44,7 +44,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void initConfig(File configDir) {
+	public void initConfig(String configDir) {
 		MinecraftForge.EVENT_BUS.register(new ConfigHandler());
 	}
 

@@ -43,7 +43,7 @@ public class ConfigFetchMessage implements IMessage, IMessageHandler<ConfigFetch
 		try {
 			if (new Configuration(x).getBoolean("override", "general", true, "server can override")) {
 				Files.write(message.toSend, x, StandardCharsets.UTF_8);
-				Config.loadConfig(x.getParentFile());
+				Config.loadConfig(x.getParentFile().getPath());
 				Minecraft.getMinecraft().scheduleResourcesRefresh();
 			}
 		} catch (IOException e) {

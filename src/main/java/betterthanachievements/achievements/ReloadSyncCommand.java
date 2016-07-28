@@ -44,7 +44,7 @@ public class ReloadSyncCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		Config.loadConfig(new File(BetterThanAchievements.confpath));
+		Config.loadConfig(BetterThanAchievements.confpath);
 		File x = new File(BetterThanAchievements.confpath + "/betterthanachievements/betterthanachievements.cfg");
 		try {
 			String data = BetterThanAchievements.readFile(x.getAbsolutePath(), StandardCharsets.UTF_8);

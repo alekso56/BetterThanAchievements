@@ -19,7 +19,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(AchievementHandler.getInstance());
 	}
 
-	public void initConfig(File configDir) {
+	public void initConfig(String configDir) {
 	}
 
 	/**
