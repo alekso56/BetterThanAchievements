@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = "1.0"
+version = "1.310"
 group= "betterthanachievements" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BetterThanAchievements"
 
