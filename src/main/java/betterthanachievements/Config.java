@@ -13,6 +13,7 @@ import org.apache.commons.compress.utils.IOUtils;
 
 import betterachievements.api.util.ColourHelper;
 import betterthanachievements.achievements.AchievementGenerator;
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -81,10 +82,14 @@ public class Config {
 						Boolean special = Boolean.valueOf(dataEntry[7]);
 						String parentListInternalName = dataEntry[8];
 
-						Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(iconName));
+						Item item = Item.REGISTRY.getObject(new ResourceLocation(iconName));
+						Block block = Block.REGISTRY.getObject(new ResourceLocation(iconName));
 						ItemStack achievementitem;
-						if (item == null) {
+						if (item == null && block == null) {
 							achievementitem = new ItemStack(Items.BONE);
+						}else if(item == null && block != null){
+							achievementitem = new ItemStack(Item.getItemFromBlock(block));
+							achievementitem.setItemDamage(metadata);
 						}else{
 							achievementitem = new ItemStack(item);
 							achievementitem.setItemDamage(metadata);
