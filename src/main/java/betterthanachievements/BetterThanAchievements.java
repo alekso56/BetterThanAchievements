@@ -41,7 +41,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(version = "0.1310", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
+@Mod(version = "0.1340", modid = Reference.RESOURCE_ID, name = Reference.ID, dependencies = "after:OpenComputers")
 public class BetterThanAchievements {
 	// goal3: block that outputs redstone signal when the player has the
 	// achievement for the set achievement
