@@ -73,11 +73,10 @@ public class Config {
 				if (dataEntry.length > 8) {
 					try {
 						String internalname = dataEntry[0];
-						System.out.println(internalname);
 						String name = dataEntry[1];
 						String description = dataEntry[2];
 						String iconName = dataEntry[3];
-						Integer metadata = Integer.parseInt(dataEntry[4]);
+						Integer metadata = Integer.parseInt(dataEntry[4]==null?dataEntry[4]:"0");
 						Integer posy = Integer.parseInt(dataEntry[5]);
 						Integer posx = Integer.parseInt(dataEntry[6]);
 						Boolean special = Boolean.valueOf(dataEntry[7]);
@@ -90,7 +89,6 @@ public class Config {
 							achievementitem = new ItemStack(Items.BONE);
 						}else if(item == null && block != null){
 							achievementitem = new ItemStack(Item.getItemFromBlock(block));
-							achievementitem.setItemDamage(metadata);
 						}else{
 							achievementitem = new ItemStack(item);
 							achievementitem.setItemDamage(metadata);
